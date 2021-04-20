@@ -1,4 +1,4 @@
-package javaframework.demo.dto.paging;
+package javaframework.demo.dto;
 
 import lombok.Data;
 
