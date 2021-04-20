@@ -1,4 +1,8 @@
+<<<<<<< HEAD:shoping_cart/src/main/java/javaframework/demo/dto/PageResult.java
 package javaframework.demo.dto;
+=======
+package javaframework.demo.paging;
+>>>>>>> nhanh2:shoping_cart/src/main/java/javaframework/demo/dto/paging/PageResult.java
 
 import lombok.Data;
 

@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class AttributeValueEntity extends BaseEntity{
 
     @Column(name = "value")
-    private String path;
+    private String value;
 
     @ManyToOne
     @JoinColumn(name = "attribute_id")
