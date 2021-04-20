@@ -13,7 +13,7 @@ public class ImageEntity extends BaseEntity {
     private String path;
 
     @Column(name = "is_preview")
-    private String isPreview;
+    private Integer isPreview;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

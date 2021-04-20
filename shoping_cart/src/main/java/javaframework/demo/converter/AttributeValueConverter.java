@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AttributeValueConverter {
+public class AttributeValueConverter extends AbstractConverter<AttributeValueDTO>{
 
     @Autowired
     private AttributeRepos attributeRepos;
@@ -17,7 +17,7 @@ public class AttributeValueConverter {
         AttributeValueDTO dto = new AttributeValueDTO();
         dto.setValue(entity.getValue());
         dto.setAttributeId(entity.getAttributeEntity().getId());
-        return dto;
+        return toDto(dto,entity);
     }
 
     public AttributeValueEntity toEntity(AttributeValueDTO dto) {
@@ -33,6 +33,8 @@ public class AttributeValueConverter {
     private AttributeValueEntity getRoleEntity(AttributeValueEntity entity, AttributeValueDTO dto) {
         entity.setValue(dto.getValue());
         entity.setAttributeEntity(attributeRepos.findById(dto.getAttributeId()).get());
+        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
+        else entity.setStatus(0);
         return entity;
     }
 }

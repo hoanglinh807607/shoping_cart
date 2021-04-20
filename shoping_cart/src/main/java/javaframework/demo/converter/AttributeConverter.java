@@ -6,11 +6,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AttributeConverter {
+public class AttributeConverter extends AbstractConverter<AttributeDTO> {
     public AttributeDTO toDto(AttributeEntity entity) {
         AttributeDTO dto = new AttributeDTO();
         dto.setName(entity.getName());
-        return dto;
+        return toDto(dto,entity);
     }
 
     public AttributeEntity toEntity(AttributeDTO dto) {
@@ -25,6 +25,8 @@ public class AttributeConverter {
     @NotNull
     private AttributeEntity getAttributeEntity(AttributeEntity entity, AttributeDTO dto) {
         entity.setName(dto.getName());
+        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
+        else entity.setStatus(0);
         return entity;
     }
 }

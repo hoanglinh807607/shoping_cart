@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class FoodDTO extends AbstractDTO<FoodDTO> {
+public class ProductDTO extends AbstractDTO<ProductDTO> {
     private String name;
     private Long price;
-    private Long pricePromotion;
+    private Long discountPrice;
+    private Integer quantity;
     private String description;
+    private String content;
+    private String sku;
     private Long categoryId;
-    private Long foodGroupId;
     private String categoryName;
-    private String foodGroupName;
     private List<ImageDTO> imageDTOS = new ArrayList<>();
 }

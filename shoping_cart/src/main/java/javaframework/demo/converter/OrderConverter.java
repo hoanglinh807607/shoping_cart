@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderConverter {
+public class OrderConverter extends AbstractConverter<OrderDTO> {
     @Autowired
     private UserRepos userRepos;
 
@@ -21,7 +21,7 @@ public class OrderConverter {
         dto.setUser_customer_email(entity.getUserCustomerEntity().getEmail());
         dto.setUser_manager_id(entity.getUserManagerEntity().getId());
         dto.setUser_manager_email(entity.getUserManagerEntity().getEmail());
-        return dto;
+        return toDto(dto,entity);
     }
 
     public OrderEntity toEntity(OrderDTO dto) {
@@ -40,6 +40,8 @@ public class OrderConverter {
         entity.setOrderStatus(dto.getOrderStatus());
         entity.setUserCustomerEntity(userRepos.findById(dto.getUser_customer_id()).get());
         entity.setUserManagerEntity(userRepos.findById(dto.getUser_manager_id()).get());
+        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
+        else entity.setStatus(0);
         return entity;
     }
 }

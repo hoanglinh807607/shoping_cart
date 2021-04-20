@@ -6,13 +6,13 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoleConverter {
+public class RoleConverter extends AbstractConverter<RoleDTO>{
 
     public RoleDTO toDto(RoleEntity entity) {
         RoleDTO dto = new RoleDTO();
         dto.setCode(entity.getCode());
         dto.setName(entity.getName());
-        return dto;
+        return toDto(dto,entity);
     }
 
     public RoleEntity toEntity(RoleDTO dto) {
@@ -28,6 +28,8 @@ public class RoleConverter {
     private RoleEntity getRoleEntity(RoleEntity entity, RoleDTO dto) {
         entity.setCode(dto.getCode());
         entity.setName(dto.getName());
+        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
+        else entity.setStatus(0);
         return entity;
     }
 

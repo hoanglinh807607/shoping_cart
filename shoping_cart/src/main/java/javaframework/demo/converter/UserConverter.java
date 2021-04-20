@@ -1,12 +1,13 @@
 package javaframework.demo.converter;
 
+import javaframework.demo.dto.AbstractDTO;
 import javaframework.demo.dto.UserDTO;
 import javaframework.demo.entities.UserEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserConverter {
+public class UserConverter extends AbstractConverter<UserDTO> {
 
     public UserDTO toDto(UserEntity entity) {
         UserDTO dto = new UserDTO();
@@ -19,7 +20,7 @@ public class UserConverter {
             dto.getRoleId().add(e.getId());
             dto.getRoleName().add(e.getName());
         });
-        return dto;
+        return toDto(dto,entity);
     }
 
     public UserEntity toEntity(UserDTO dto) {
@@ -38,6 +39,8 @@ public class UserConverter {
         entity.setFullName(dto.getFullName());
         entity.setPhone(dto.getPhone());
         entity.setAddress(dto.getAddress());
+        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
+        else entity.setStatus(0);
         return entity;
     }
 }

@@ -14,10 +14,13 @@ public class ProductEntity extends BaseEntity{
     private String name;
 
     @Column(name = "price")
-    private String price;
+    private Long price;
+
+    @Column(name = "discount_price")
+    private Long discountPrice;
 
     @Column(name = "quantity")
-    private String quantity;
+    private Integer quantity;
 
     @Column(name = "description")
     private String description;
@@ -25,8 +28,6 @@ public class ProductEntity extends BaseEntity{
     @Column(name = "content")
     private String content;
 
-    @Column(name = "discount_price")
-    private String discountPrice;
 
     @Column(name = "sku")
     private String sku;

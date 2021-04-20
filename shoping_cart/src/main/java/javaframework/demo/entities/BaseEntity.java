@@ -19,7 +19,7 @@ public class BaseEntity {
     private Long id;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "createdby")
     @CreatedBy
