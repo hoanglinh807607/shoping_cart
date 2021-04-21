@@ -30,7 +30,7 @@ public class CategoryConverter extends AbstractConverter<CategoryDTO> implements
     private CategoryEntity getCategoryEntity(CategoryEntity entity, CategoryDTO dto) {
         entity.setName(dto.getName());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

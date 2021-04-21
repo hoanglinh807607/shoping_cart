@@ -27,7 +27,7 @@ public class AttributeConverter extends AbstractConverter<AttributeDTO> implemen
     private AttributeEntity getAttributeEntity(AttributeEntity entity, AttributeDTO dto) {
         entity.setName(dto.getName());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

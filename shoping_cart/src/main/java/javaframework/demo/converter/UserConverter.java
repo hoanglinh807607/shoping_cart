@@ -42,7 +42,7 @@ public class UserConverter extends AbstractConverter<UserDTO> implements IAbstra
         entity.setPhone(dto.getPhone());
         entity.setAddress(dto.getAddress());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 

@@ -58,7 +58,7 @@ public class ProductConverter extends AbstractConverter<ProductDTO> implements I
         entity.setSku(dto.getSku());
         entity.setCategoryEntity(categoryRepos.findById(dto.getCategoryId()).get());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

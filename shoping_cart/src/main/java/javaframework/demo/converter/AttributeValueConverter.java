@@ -37,7 +37,7 @@ public class AttributeValueConverter extends AbstractConverter<AttributeValueDTO
         entity.setValue(dto.getValue());
         entity.setAttributeEntity(attributeRepos.findById(dto.getAttributeId()).get());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

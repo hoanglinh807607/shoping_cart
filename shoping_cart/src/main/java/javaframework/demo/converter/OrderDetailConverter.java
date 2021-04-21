@@ -47,7 +47,7 @@ public class OrderDetailConverter extends AbstractConverter<OrderDetailDTO> impl
         entity.setOrderEntity(orderRepos.findById(dto.getOrder_id()).get());
         entity.setProductEntity(productRepos.findById(dto.getProductDTO().getId()).get());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

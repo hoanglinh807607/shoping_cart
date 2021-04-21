@@ -43,7 +43,7 @@ public class ImageConverter extends AbstractConverter<ImageDTO> implements IAbst
         entity.setModifiedDate(dto.getModifiedDate());
         entity.setModifiedBy(dto.getModifiedBy());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

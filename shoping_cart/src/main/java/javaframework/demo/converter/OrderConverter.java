@@ -44,7 +44,7 @@ public class OrderConverter extends AbstractConverter<OrderDTO> implements IAbst
         entity.setUserCustomerEntity(userRepos.findById(dto.getUser_customer_id()).get());
         entity.setUserManagerEntity(userRepos.findById(dto.getUser_manager_id()).get());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 }

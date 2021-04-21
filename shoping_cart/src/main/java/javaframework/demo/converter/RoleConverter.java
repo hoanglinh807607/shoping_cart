@@ -32,7 +32,7 @@ public class RoleConverter extends AbstractConverter<RoleDTO> implements IAbstra
         entity.setCode(dto.getCode());
         entity.setName(dto.getName());
         if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(0);
+        else entity.setStatus(1);
         return entity;
     }
 
