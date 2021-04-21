@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ImageConverter extends AbstractConverter<ImageDTO>{
+public class ImageConverter extends AbstractConverter<ImageDTO> implements IAbstractConverter<ImageDTO, ImageEntity>{
     @Autowired
     private ProductRepos productRepos;
 
+    @Override
     public ImageDTO toDto(ImageEntity entity) {
         ImageDTO dto = new ImageDTO();
         dto.setPath(entity.getPath());
@@ -21,11 +22,13 @@ public class ImageConverter extends AbstractConverter<ImageDTO>{
         return toDto(dto,entity);
     }
 
+    @Override
     public ImageEntity toEntity(ImageDTO dto) {
         ImageEntity entity = new ImageEntity();
         return getImageEntity(entity,dto);
     }
 
+    @Override
     public ImageEntity toEntity(ImageEntity entity, ImageDTO dto) {
         return getImageEntity(entity,dto);
     }

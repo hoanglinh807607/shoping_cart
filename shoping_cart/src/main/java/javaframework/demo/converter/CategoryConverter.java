@@ -6,18 +6,22 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryConverter extends AbstractConverter<CategoryDTO>{
+public class CategoryConverter extends AbstractConverter<CategoryDTO> implements IAbstractConverter<CategoryDTO, CategoryEntity>{
+
+    @Override
     public CategoryDTO toDto(CategoryEntity entity) {
         CategoryDTO dto = new CategoryDTO();
         dto.setName(entity.getName());
         return toDto(dto,entity);
     }
 
+    @Override
     public CategoryEntity toEntity(CategoryDTO dto) {
         CategoryEntity entity = new CategoryEntity();
         return getCategoryEntity(entity,dto);
     }
 
+    @Override
     public CategoryEntity toEntity(CategoryEntity entity, CategoryDTO dto) {
         return getCategoryEntity(entity,dto);
     }

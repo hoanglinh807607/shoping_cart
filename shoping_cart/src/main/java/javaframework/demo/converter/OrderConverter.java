@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderConverter extends AbstractConverter<OrderDTO> {
+public class OrderConverter extends AbstractConverter<OrderDTO> implements IAbstractConverter<OrderDTO, OrderEntity>{
     @Autowired
     private UserRepos userRepos;
 
+    @Override
     public OrderDTO toDto(OrderEntity entity) {
         OrderDTO dto = new OrderDTO();
         dto.setCode(entity.getCode());
@@ -24,11 +25,13 @@ public class OrderConverter extends AbstractConverter<OrderDTO> {
         return toDto(dto,entity);
     }
 
+    @Override
     public OrderEntity toEntity(OrderDTO dto) {
         OrderEntity entity = new OrderEntity();
         return getOrderEntity(entity,dto);
     }
 
+    @Override
     public OrderEntity toEntity(OrderEntity entity, OrderDTO dto) {
         return getOrderEntity(entity,dto);
     }

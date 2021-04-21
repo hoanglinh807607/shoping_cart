@@ -1,14 +1,14 @@
 package javaframework.demo.converter;
 
-import javaframework.demo.dto.AbstractDTO;
 import javaframework.demo.dto.UserDTO;
 import javaframework.demo.entities.UserEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserConverter extends AbstractConverter<UserDTO> {
+public class UserConverter extends AbstractConverter<UserDTO> implements IAbstractConverter<UserDTO, UserEntity> {
 
+    @Override
     public UserDTO toDto(UserEntity entity) {
         UserDTO dto = new UserDTO();
         dto.setEmail(entity.getEmail());
@@ -23,11 +23,13 @@ public class UserConverter extends AbstractConverter<UserDTO> {
         return toDto(dto,entity);
     }
 
+    @Override
     public UserEntity toEntity(UserDTO dto) {
         UserEntity result = new UserEntity();
         return getUserEntity(result, dto);
     }
 
+    @Override
     public UserEntity toEntity(UserEntity entity, UserDTO dto) {
         return getUserEntity(entity, dto);
     }
@@ -43,4 +45,5 @@ public class UserConverter extends AbstractConverter<UserDTO> {
         else entity.setStatus(0);
         return entity;
     }
+
 }

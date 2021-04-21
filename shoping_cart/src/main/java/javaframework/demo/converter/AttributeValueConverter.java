@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AttributeValueConverter extends AbstractConverter<AttributeValueDTO>{
+public class AttributeValueConverter extends AbstractConverter<AttributeValueDTO> implements IAbstractConverter<AttributeValueDTO, AttributeValueEntity>{
 
     @Autowired
     private AttributeRepos attributeRepos;
 
+    @Override
     public AttributeValueDTO toDto(AttributeValueEntity entity) {
         AttributeValueDTO dto = new AttributeValueDTO();
         dto.setValue(entity.getValue());
@@ -20,11 +21,13 @@ public class AttributeValueConverter extends AbstractConverter<AttributeValueDTO
         return toDto(dto,entity);
     }
 
+    @Override
     public AttributeValueEntity toEntity(AttributeValueDTO dto) {
         AttributeValueEntity entity = new AttributeValueEntity();
         return getRoleEntity(entity,dto);
     }
 
+    @Override
     public AttributeValueEntity toEntity(AttributeValueEntity entity, AttributeValueDTO dto) {
         return getRoleEntity(entity,dto);
     }

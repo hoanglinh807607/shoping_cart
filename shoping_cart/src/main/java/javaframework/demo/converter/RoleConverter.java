@@ -6,8 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoleConverter extends AbstractConverter<RoleDTO>{
+public class RoleConverter extends AbstractConverter<RoleDTO> implements IAbstractConverter<RoleDTO, RoleEntity>{
 
+    @Override
     public RoleDTO toDto(RoleEntity entity) {
         RoleDTO dto = new RoleDTO();
         dto.setCode(entity.getCode());
@@ -15,11 +16,13 @@ public class RoleConverter extends AbstractConverter<RoleDTO>{
         return toDto(dto,entity);
     }
 
+    @Override
     public RoleEntity toEntity(RoleDTO dto) {
         RoleEntity entity = new RoleEntity();
         return getRoleEntity(entity,dto);
     }
 
+    @Override
     public RoleEntity toEntity(RoleEntity entity, RoleDTO dto) {
         return getRoleEntity(entity,dto);
     }
