@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="common/client/head.html">
+</head>
+<body>
+    <div th:replace="common/client/header.html"></div>
+    <div layout:fragment="content"></div>
+    <div th:replace="common/client/footer.html"></div>
+
+    <script th:src="@{/js/vendor-special/lazysizes.min.js}"></script>
+    <script th:src="@{/js/vendor-special/ls.bgset.min.js}"></script>
+    <script th:src="@{/js/vendor-special/ls.aspectratio.min.js}"></script>
+    <script th:src="@{/js/vendor-special/jquery.min.js}"></script>
+    <script th:src="@{/js/vendor-special/jquery.ez-plus.js}"></script>
+    <script th:src="@{/js/vendor/vendor.min.js}"></script>
+    <script th:src="@{/js/app-html.js}"></script>
+</body>
+</html>
