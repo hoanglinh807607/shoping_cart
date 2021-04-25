@@ -18,4 +18,8 @@ public class ImageEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "category_value_id")
+    private CategoryValueEntity categoryValueEntity;
 }

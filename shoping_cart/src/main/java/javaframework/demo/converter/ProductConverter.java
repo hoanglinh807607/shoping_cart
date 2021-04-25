@@ -29,7 +29,7 @@ public class ProductConverter extends AbstractConverter<ProductDTO> implements I
         dto.setCategoryName(entity.getCategoryEntity().getName());
         if( entity.getImageEntities() != null ) {
             entity.getImageEntities().stream().forEach(i -> {
-                dto.getImageDTOS().add(imageConverter.toDto(i));
+                dto.getImageDTOList().add(imageConverter.toDto(i));
             });
         }
         return toDto(dto,entity);

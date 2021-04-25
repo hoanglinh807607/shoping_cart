@@ -19,4 +19,7 @@ public class CategoryValueEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "categoryEntity")
     private Collection<ProductEntity> productEntities;
+
+    @OneToMany(mappedBy = "categoryValueEntity")
+    private Collection<ImageEntity> imageEntities;
 }

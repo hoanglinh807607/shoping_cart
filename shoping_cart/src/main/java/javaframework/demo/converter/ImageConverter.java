@@ -1,7 +1,9 @@
 package javaframework.demo.converter;
 
 import javaframework.demo.dto.ImageDTO;
+import javaframework.demo.entities.CategoryValueEntity;
 import javaframework.demo.entities.ImageEntity;
+import javaframework.demo.repository.CategoryValueRepos;
 import javaframework.demo.repository.ProductRepos;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,22 @@ public class ImageConverter extends AbstractConverter<ImageDTO> implements IAbst
     @Autowired
     private ProductRepos productRepos;
 
+    @Autowired
+    private CategoryValueRepos categoryValueRepos;
+
     @Override
     public ImageDTO toDto(ImageEntity entity) {
         ImageDTO dto = new ImageDTO();
         dto.setPath(entity.getPath());
         dto.setIs_preview(entity.getIsPreview());
-        dto.setFoodId(entity.getProductEntity().getId());
-        dto.setFoodName(entity.getProductEntity().getName());
+        if( entity.getProductEntity() != null ) {
+            dto.setProductId(entity.getProductEntity().getId());
+            dto.setProductName(entity.getProductEntity().getName());
+        }
+        if( entity.getCategoryValueEntity() != null ){
+            dto.setCategoryValueId(entity.getCategoryValueEntity().getId());
+            dto.setCategoryValueName(entity.getCategoryValueEntity().getName());
+        }
         return toDto(dto,entity);
     }
 
@@ -37,7 +48,8 @@ public class ImageConverter extends AbstractConverter<ImageDTO> implements IAbst
     private ImageEntity getImageEntity(ImageEntity entity, ImageDTO dto) {
         if( dto.getPath() != null ) entity.setPath(dto.getPath());
         entity.setIsPreview(dto.getIs_preview());
-        entity.setProductEntity(productRepos.findById(dto.getFoodId()).get());
+        if( dto.getProductId() != null) entity.setProductEntity(productRepos.findById(dto.getProductId()).get());
+        if( dto.getCategoryValueId() != null ) entity.setCategoryValueEntity(categoryValueRepos.findById(dto.getCategoryValueId()).get());
         entity.setCreatedDate(dto.getCreatedDate());
         entity.setCreatedBy(dto.getCreatedBy());
         entity.setModifiedDate(dto.getModifiedDate());

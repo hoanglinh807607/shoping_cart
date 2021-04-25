@@ -1,6 +1,7 @@
 package javaframework.demo.controller.client;
 
 import javaframework.demo.service.impl.CategoryService;
+import javaframework.demo.service.impl.ImageService;
 import javaframework.demo.service.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ public class HomeController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping(value = {"/","/index"})
     public String showIndexPage(Model model){

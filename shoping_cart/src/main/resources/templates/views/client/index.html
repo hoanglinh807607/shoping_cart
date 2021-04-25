@@ -342,7 +342,7 @@
         <div class="drop-overlay js-dropdn-close"></div>
     </div>
 </div>
-<div class="page-content">
+<div class="page-content" th:object="${categoryDTO}">
     <div id="shopify-section-1586608150816" class="shopify-section index-section index-section--flush">
         <div class="holder fullwidth fullboxed mt-0 full-nopad">
             <div class="container">
@@ -496,15 +496,20 @@
             }
         </style>
     </div>
-    <div class="holder holder-mt-small" id="holderCollectionGrid" th:object="${categoryDTO}">
+    <div class="holder holder-mt-small" id="holderCollectionGrid">
         <div class="container">
-            <div class="collection-grid-2 row justify-content-center" th:each="categoryValue : *{categoryValueDTOS}">
-                <div class="collection-grid-2-item col-9 col-md-quarter col-lg-3">
+            <div class="collection-grid-2 row justify-content-center">
+                <div class="collection-grid-2-item col-9 col-md-quarter col-lg-3" th:each="categoryValue : *{categoryValueDTOS}">
                     <a href="collections.html" target="_self" class="bnr-wrap collection-grid-2-item-inside">
                         <div class="collection-grid-2-img image-container image-hover-scale"
-                             style="padding-bottom: 77.778%"><img class="lazyload fade-up"
-                                                                  data-src="images/skins/electronics/category-img-01.webp"
-                                                                  data-sizes="auto" alt="Office equipment"></div>
+                             style="padding-bottom: 77.778%">
+                            <th:block th:each="itemImage : ${categoryValue.imageDTOList}">
+                                <th:block th:if="${itemImage.is_preview}">
+                                    <img class="lazyload fade-up" th:src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                         data-sizes="auto" th:alt="${categoryValue.name}">
+                                </th:block>
+                            </th:block>
+                        </div>
                         <h3 class="collection-grid-2-title pb-15 heading-font" th:text="${categoryValue.name}"></h3>
                     </a>
                 </div>
@@ -529,21 +534,27 @@
             </div>
             <div class="prd-grid-wrap position-relative">
                 <div class="prd-grid data-to-show-3 data-to-show-lg-3 data-to-show-md-2 data-to-show-sm-2 data-to-show-xs-2 js-category-grid">
-                    <div class="prd prd-hor ">
-                        <div class="prd-inside">
+                    <div class="prd prd-hor "  th:each="categoryValue, state : *{categoryValueDTOS}" th:if="${state.index<6}">
+                        <div class="prd-inside" th:each="productItem,state : ${categoryValue.productDTOList}" th:if="${state.index<1}">
                             <div class="prd-img-area">
                                 <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-01-1.webp" alt="iPhone X"
-                                         class="js-prd-img lazyload">
+                                    <th:block th:each="itemImage : ${productItem.imageDTOList}">
+                                        <th:block th:if="${itemImage.is_preview}">
+                                            <img th:src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                                 th:alt="${categoryValue.name}"
+                                                 class="js-prd-img lazyload">
+                                        </th:block>
+                                    </th:block>
                                     <div class="foxic-loader"></div>
-                                    <div class="prd-big-circle-labels">
-                                        <div class="label-sale"><span>-10% <span class="sale-text">Sale</span></span>
-                                            <div class="countdown-circle">
-                                                <div class="countdown js-countdown" data-countdown="2021/07/01"></div>
+                                    <th:block th:if="${productItem.discountPrice}">
+                                        <div class="prd-big-circle-labels">
+                                            <div class="label-sale"><span>-[[100-${productItem.discountPrice*100 / productItem.price}]]% <span class="sale-text">Sale</span></span>
+                                                <div class="countdown-circle">
+                                                    <div class="countdown js-countdown" data-countdown="2021/07/01"></div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </th:block>
                                 </a>
                                 <div class="prd-circle-labels">
                                     <a href="#"
@@ -565,10 +576,8 @@
                                                 class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
                                         </div>
                                     </div>
-                                    <h2 class="prd-title"><a href="product.html">iPhone X</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
+                                    <h2 class="prd-title"><a href="product.html" th:text="${productItem.name}"></a></h2>
+                                    <div class="prd-description" th:text="${productItem.description}">
                                     </div>
                                 </div>
                                 <div class="prd-hovers">
@@ -584,401 +593,14 @@
                                         </div>
                                     </div>
                                     <div class="prd-price">
-                                        <div class="price-old">$ 200</div>
-                                        <div class="price-new">$ 180</div>
+                                        <div class="price-old">$ [[${productItem.price}]]</div>
+                                        <div class="price-new">$ [[${productItem.discountPrice}]]</div>
                                     </div>
                                     <div class="prd-action">
                                         <div class="prd-action-left">
                                             <form action="#">
                                                 <button class="btn js-prd-addtocart"
                                                         data-product='{"name": "iPhone X", "path":"images/skins/electronics/products/product-01-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="prd-action-right">
-                                            <div class="prd-action-right-inside">
-                                                <div class="prd-tag"><a href="#">FOXic</a></div>
-                                                <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd-hor ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-02-1.webp" alt="QLED TV"
-                                         class="js-prd-img lazyload">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-circle-labels">
-                                        <div class="label-new"><span>New</span></div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="prd-title"><a href="product.html">QLED TV</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div><a href="#" class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                                                data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "QLED TV", "path":"images/skins/electronics/products/product-02-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="prd-action-right">
-                                            <div class="prd-action-right-inside">
-                                                <div class="prd-tag"><a href="#">FOXic</a></div>
-                                                <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd-hor ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-03-1.webp"
-                                         alt="Microsoft Laptop" class="js-prd-img lazyload">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-circle-labels">
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="prd-title"><a href="product.html">Microsoft Laptop</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div><a href="#" class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                                                data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Microsoft Laptop", "path":"images/skins/electronics/products/product-03-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="prd-action-right">
-                                            <div class="prd-action-right-inside">
-                                                <div class="prd-tag"><a href="#">FOXic</a></div>
-                                                <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd-hor ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-04-1.webp"
-                                         alt="Smart speaker 50 watts" class="js-prd-img lazyload">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-circle-labels">
-                                        <div class="label-sale"><span>-50% <span class="sale-text">Sale</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="prd-title"><a href="product.html">Smart speaker 50 watts</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div><a href="#" class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                                                data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 149</div>
-                                        <div class="price-new">$ 299</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Smart speaker 50 watts", "path":"images/skins/electronics/products/product-04-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="prd-action-right">
-                                            <div class="prd-action-right-inside">
-                                                <div class="prd-tag"><a href="#">FOXic</a></div>
-                                                <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd-hor ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-05-1.webp"
-                                         alt="Black Headphones" class="js-prd-img lazyload">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-circle-labels">
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="prd-title"><a href="product.html">Black Headphones</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div><a href="#" class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                                                data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-new">$ 280</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Black Headphones", "path":"images/skins/electronics/products/product-05-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="prd-action-right">
-                                            <div class="prd-action-right-inside">
-                                                <div class="prd-tag"><a href="#">FOXic</a></div>
-                                                <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd-hor ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-06-1.webp"
-                                         alt="Laser scanner" class="js-prd-img lazyload">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-circle-labels">
-                                        <div class="label-sale"><span>-10% <span class="sale-text">Sale</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="prd-title"><a href="product.html">Laser scanner</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div><a href="#" class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                                                data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 200</div>
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Laser scanner", "path":"images/skins/electronics/products/product-06-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
                                                     Add To Cart
                                                 </button>
                                             </form>
@@ -1011,37 +633,37 @@
                 data-slick='{"slidesToShow": 5,  "responsive": [{"breakpoint": 992,"settings": {"slidesToShow": 4 }},{"breakpoint": 480,"settings": {"slidesToShow": 2 }}]}'>
                 <li>
                     <div>
-                        <img class="lazyload lazypreload" data-src="images/skins/electronics/brand-01.webp"
+                        <img class="lazyload lazypreload" th:src="@{/image_upload/brand-01.webp}" data-src="images/skins/electronics/brand-01.webp"
                              data-sizes="auto" alt="Brand">
                     </div>
                 </li>
                 <li>
                     <div>
-                        <img class="lazyload lazypreload" data-src="images/skins/electronics/brand-02.webp"
+                        <img class="lazyload lazypreload" th:src="@{/image_upload/brand-02.webp}" data-src="images/skins/electronics/brand-02.webp"
                              data-sizes="auto" alt="Brand">
                     </div>
                 </li>
                 <li>
                     <div>
-                        <img class="lazyload lazypreload" data-src="images/skins/electronics/brand-03.webp"
+                        <img class="lazyload lazypreload" th:src="@{/image_upload/brand-03.webp}" data-src="images/skins/electronics/brand-03.webp"
                              data-sizes="auto" alt="Brand">
                     </div>
                 </li>
                 <li>
                     <div>
-                        <img class="lazyload lazypreload" data-src="images/skins/electronics/brand-04.webp"
+                        <img class="lazyload lazypreload" th:src="@{/image_upload/brand-04.webp}" data-src="images/skins/electronics/brand-04.webp"
                              data-sizes="auto" alt="Brand">
                     </div>
                 </li>
                 <li>
                     <div>
-                        <img class="lazyload lazypreload" data-src="images/skins/electronics/brand-05.webp"
+                        <img class="lazyload lazypreload"  th:src="@{/image_upload/brand-05.webp}" data-src="images/skins/electronics/brand-05.webp"
                              data-sizes="auto" alt="Brand">
                     </div>
                 </li>
                 <li>
                     <div>
-                        <img class="lazyload lazypreload" data-src="images/skins/electronics/brand-06.webp"
+                        <img class="lazyload lazypreload" th:src="@{/image_upload/brand-06.webp}" data-src="images/skins/electronics/brand-06.webp"
                              data-sizes="auto" alt="Brand">
                     </div>
                 </li>
@@ -1055,95 +677,70 @@
             </div>
             <div class="prd-grid-wrap position-relative">
                 <div class="prd-grid data-to-show-4 data-to-show-lg-3 data-to-show-md-2 data-to-show-sm-2 data-to-show-xs-2 js-category-grid">
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-07-1.webp"
-                                         alt="Window Air Conditioner" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                        <div class="label-sale"><span>-10% <span class="sale-text">Sale</span></span>
-                                            <div class="countdown-circle">
-                                                <div class="countdown js-countdown" data-countdown="2021/07/01"></div>
+                    <th:block th:each="categoryValue, state : *{categoryValueDTOS}" th:if="${state.index<8}">
+                        <div class="prd prd--style2 prd-labels--max prd-labels-shadow" th:each="productItem,state : ${categoryValue.productDTOList}" th:if="${state.index<1}">
+                            <div class="prd-inside">
+                                <div class="prd-img-area">
+                                    <a href="product.html" class="prd-img image-hover-scale image-container">
+                                        <th:block th:each="itemImage : ${productItem.imageDTOList}">
+                                            <th:block th:if="${itemImage.is_preview}">
+                                                <img th:src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                                     th:data-src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                                     alt="Window Air Conditioner" class="js-prd-img lazyload fade-up">
+                                            </th:block>
+                                        </th:block>
+                                        <div class="foxic-loader"></div>
+                                        <th:block th:if="${productItem.discountPrice}">
+                                            <div class="prd-big-circle-labels">
+                                                <div class="label-sale"><span>-[[100-${productItem.discountPrice*100 / productItem.price}]]% <span class="sale-text">Sale</span></span>
+                                                    <div class="countdown-circle">
+                                                        <div class="countdown js-countdown" data-countdown="2021/07/01"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </a>
+                                    <div class="prd-circle-labels">
+                                        <a href="#"
+                                           class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                           title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
+                                                                                                           class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                                                                                           title="Remove From Wishlist"><i
+                                            class="icon-heart-hover"></i></a>
+                                        <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
+                                           data-src="ajax/ajax-quickview.html"><i
+                                                class="icon-eye"></i><span>QUICK VIEW</span></a>
+                                    </div>
+                                    <ul class="list-options color-swatch">
+                                        <th:block th:each="itemImage : ${productItem.imageDTOList}">
+                                            <li th:data-image="@{/image_upload/{path}(path=${itemImage.path})}" class="active">
+                                                <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
+                                                   title="Color Name">
+                                                    <img
+                                                            th:src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                                            th:data-src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                                            class="lazyload fade-up" alt="Color Name"></a></li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+                                <div class="prd-info">
+                                    <div class="prd-info-wrap">
+                                        <div class="prd-info-top">
+                                            <div class="prd-rating"><i class="icon-star-fill fill"></i><i
+                                                    class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
+                                                    class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-07-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-07-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-07-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-07-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
+                                        <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
                                                 class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
+                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
+                                        <div class="prd-tag"><a href="#">FOXic</a></div>
+                                        <h2 class="prd-title"><a href="product.html" th:text="${productItem.name}"></a></h2>
+                                        <div class="prd-description">
+                                            Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
+                                            torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
                                         </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Window Air Conditioner</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Window Air Conditioner", "path":"images/skins/electronics/products/product-07-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 200</div>
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
+                                        <div class="prd-action">
                                             <form action="#">
                                                 <button class="btn js-prd-addtocart"
                                                         data-product='{"name": "Window Air Conditioner", "path":"images/skins/electronics/products/product-07-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
@@ -1152,688 +749,38 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-08-1.webp"
-                                         alt="Talking Assistant Column" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                        <div class="label-new"><span>New</span></div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-08-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-08-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-08-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-08-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
+                                    <div class="prd-hovers">
+                                        <div class="prd-circle-labels">
+                                            <div><a href="#"
+                                                    class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                                    title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
+                                                                                                                    class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                                                                                                    title="Remove From Wishlist"><i
+                                                    class="icon-heart-hover"></i></a></div>
+                                            <div class="prd-hide-mobile"><a href="#"
+                                                                            class="circle-label-qview js-prd-quickview"
+                                                                            data-src="ajax/ajax-quickview.html"><i
+                                                    class="icon-eye"></i><span>QUICK VIEW</span></a></div>
                                         </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Talking Assistant Column</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Talking Assistant Column", "path":"images/skins/electronics/products/product-08-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Talking Assistant Column", "path":"images/skins/electronics/products/product-08-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
+                                        <div class="prd-price">
+                                            <div class="price-old">$ [[${productItem.price}]]</div>
+                                            <div class="price-new">$ [[${productItem.discountPrice}]]</div>
+                                        </div>
+                                        <div class="prd-action">
+                                            <div class="prd-action-left">
+                                                <form action="#">
+                                                    <button class="btn js-prd-addtocart"
+                                                            data-product='{"name": "Window Air Conditioner", "path":"images/skins/electronics/products/product-07-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
+                                                        Add To Cart
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-09-1.webp"
-                                         alt="Silent Mouse" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-09-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-09-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-09-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-09-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Silent Mouse</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Silent Mouse", "path":"images/skins/electronics/products/product-09-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Silent Mouse", "path":"images/skins/electronics/products/product-09-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-10-1.webp"
-                                         alt="Music Center Pro" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                        <div class="label-sale"><span>-50% <span class="sale-text">Sale</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-10-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-10-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-10-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-10-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Music Center Pro</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Music Center Pro", "path":"images/skins/electronics/products/product-10-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 149</div>
-                                        <div class="price-new">$ 299</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Music Center Pro", "path":"images/skins/electronics/products/product-10-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-11-1.webp"
-                                         alt="Smart Thermostat" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-11-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-11-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-11-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-11-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Smart Thermostat</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Smart Thermostat", "path":"images/skins/electronics/products/product-11-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-new">$ 280</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Smart Thermostat", "path":"images/skins/electronics/products/product-11-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-12-1.webp"
-                                         alt="Smart Watch" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                        <div class="label-sale"><span>-10% <span class="sale-text">Sale</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-12-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-12-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-12-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-12-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Smart Watch</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Smart Watch", "path":"images/skins/electronics/products/product-12-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 200</div>
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Smart Watch", "path":"images/skins/electronics/products/product-12-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-13-1.webp"
-                                         alt="Cable Modem Router" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                        <div class="label-sale"><span>-10% <span class="sale-text">Sale</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-13-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-13-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-13-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-13-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Cable Modem Router</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Cable Modem Router", "path":"images/skins/electronics/products/product-13-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 200</div>
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Cable Modem Router", "path":"images/skins/electronics/products/product-13-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
-                        <div class="prd-inside">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                         data-src="images/skins/electronics/products/product-14-1.webp"
-                                         alt="Music Amplifier Box" class="js-prd-img lazyload fade-up">
-                                    <div class="foxic-loader"></div>
-                                    <div class="prd-big-squared-labels">
-                                        <div class="label-sale"><span>-10% <span class="sale-text">Sale</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                                <ul class="list-options color-swatch">
-                                    <li data-image="images/skins/electronics/products/product-14-1.webp" class="active">
-                                        <a href="#" class="js-color-toggle" data-toggle="tooltip" data-placement="right"
-                                           title="Color Name"><img
-                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                data-src="images/skins/electronics/products/product-14-1.webp"
-                                                class="lazyload fade-up" alt="Color Name"></a></li>
-                                    <li data-image="images/skins/electronics/products/product-14-2.webp"><a href="#"
-                                                                                                            class="js-color-toggle"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            data-placement="right"
-                                                                                                            title="Color Name"><img
-                                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            data-src="images/skins/electronics/products/product-14-2.webp"
-                                            class="lazyload fade-up" alt="Color Name"></a></li>
-                                </ul>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                            class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
-                                    <div class="prd-tag"><a href="#">FOXic</a></div>
-                                    <h2 class="prd-title"><a href="product.html">Music Amplifier Box</a></h2>
-                                    <div class="prd-description">
-                                        Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Nam nec ante sed lacinia.
-                                    </div>
-                                    <div class="prd-action">
-                                        <form action="#">
-                                            <button class="btn js-prd-addtocart"
-                                                    data-product='{"name": "Music Amplifier Box", "path":"images/skins/electronics/products/product-14-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                Add To Cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
-                                    <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div class="prd-hide-mobile"><a href="#"
-                                                                        class="circle-label-qview js-prd-quickview"
-                                                                        data-src="ajax/ajax-quickview.html"><i
-                                                class="icon-eye"></i><span>QUICK VIEW</span></a></div>
-                                    </div>
-                                    <div class="prd-price">
-                                        <div class="price-old">$ 200</div>
-                                        <div class="price-new">$ 180</div>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "Music Amplifier Box", "path":"images/skins/electronics/products/product-14-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </th:block>
                 </div>
             </div>
         </div>
