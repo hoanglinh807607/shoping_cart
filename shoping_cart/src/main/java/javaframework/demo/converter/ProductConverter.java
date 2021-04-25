@@ -2,7 +2,7 @@ package javaframework.demo.converter;
 
 import javaframework.demo.dto.ProductDTO;
 import javaframework.demo.entities.ProductEntity;
-import javaframework.demo.repository.CategoryRepos;
+import javaframework.demo.repository.CategoryValueRepos;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class ProductConverter extends AbstractConverter<ProductDTO> implements I
     private ImageConverter imageConverter;
 
     @Autowired
-    private CategoryRepos categoryRepos;
+    private CategoryValueRepos categoryRepos;
 
     @Override
     public ProductDTO toDto(ProductEntity entity) {

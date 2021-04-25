@@ -34,7 +34,7 @@ public class ProductEntity extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryEntity categoryEntity;
+    private CategoryValueEntity categoryEntity;
 
     @OneToMany(mappedBy = "productEntity")
     private Collection<ImageEntity> imageEntities;

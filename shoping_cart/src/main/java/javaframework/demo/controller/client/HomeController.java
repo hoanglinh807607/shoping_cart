@@ -1,5 +1,6 @@
 package javaframework.demo.controller.client;
 
+import javaframework.demo.service.impl.CategoryService;
 import javaframework.demo.service.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,12 @@ public class HomeController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping(value = {"/","/index"})
-    public String showIndexPage(){
+    public String showIndexPage(Model model){
+        model.addAttribute("categoryDTO", categoryService.findOne(4l));
         return "views/client/index";
     }
 

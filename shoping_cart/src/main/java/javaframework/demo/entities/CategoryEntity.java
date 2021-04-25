@@ -11,14 +11,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "category")
 @Data
-public class CategoryEntity extends BaseEntity {
+public class CategoryEntity extends BaseEntity{
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "parent_id")
-    private Integer parentId;
-
     @OneToMany(mappedBy = "categoryEntity")
-    Collection<ProductEntity> productEntities;
+    Collection<CategoryValueEntity> categoryValueEntities;
 }

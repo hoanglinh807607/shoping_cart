@@ -3,15 +3,22 @@ package javaframework.demo.converter;
 import javaframework.demo.dto.CategoryDTO;
 import javaframework.demo.entities.CategoryEntity;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryConverter extends AbstractConverter<CategoryDTO> implements IAbstractConverter<CategoryDTO, CategoryEntity>{
+public class CategoryConverter extends AbstractConverter<CategoryDTO> implements IAbstractConverter<CategoryDTO, CategoryEntity> {
+
+    @Autowired
+    private CategoryValueConverter categoryValueConverter;
 
     @Override
     public CategoryDTO toDto(CategoryEntity entity) {
         CategoryDTO dto = new CategoryDTO();
         dto.setName(entity.getName());
+        entity.getCategoryValueEntities().forEach(c->{
+            dto.getCategoryValueDTOS().add(categoryValueConverter.toDto(c));
+        });
         return toDto(dto,entity);
     }
 
@@ -23,7 +30,7 @@ public class CategoryConverter extends AbstractConverter<CategoryDTO> implements
 
     @Override
     public CategoryEntity toEntity(CategoryEntity entity, CategoryDTO dto) {
-        return getCategoryEntity(entity,dto);
+        return null;
     }
 
     @NotNull
