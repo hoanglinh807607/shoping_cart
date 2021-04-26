@@ -25,12 +25,12 @@ public class HomeController {
     @GetMapping(value = {"/","/index"})
     public String showIndexPage(Model model){
         model.addAttribute("categoryDTO", categoryService.findOne(4l));
-        return "views/client/index";
+        return "views/client/electronics/index";
     }
 
     @GetMapping(value = "/product/{id}/detail")
     public String showProductDetail(Model model, @PathVariable(name = "id") Long id){
         model.addAttribute("productDTO", productService.findOne(id));
-        return "views/client/product_detail";
+        return "views/client/electronics/product_detail";
     }
 }
