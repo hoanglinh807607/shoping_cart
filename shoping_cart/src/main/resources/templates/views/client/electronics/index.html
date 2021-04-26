@@ -352,10 +352,10 @@
                          data-autoplay="true" data-speed="5000">
                         <a href="#" target="_self" class="bnslider-slide ">
                             <div class="bnslider-image-mobile lazyload fade-up-fast"
-                                 data-bgset="images/skins/electronics/slider/slide-electronics-01-m.webp"
+                                 th:data-bgset="@{/image_upload/slide-electronics-01.webp}"
                                  data-sizes="auto"></div>
                             <div class="bnslider-image lazyload fade-up-fast"
-                                 data-bgset="images/skins/electronics/slider/slide-electronics-01.webp"
+                                 th:data-bgset="@{/image_upload/slide-electronics-01.webp}"
                                  data-sizes="auto"></div>
                             <div class="bnslider-text-wrap bnslider-overlay container">
                                 <div class="bnslider-text-content txt-middle txt-left txt-middle-m txt-center-m">
@@ -388,10 +388,10 @@
                         </a>
                         <a href="#" target="_self" class="bnslider-slide ">
                             <div class="bnslider-image-mobile lazyload fade-up-fast"
-                                 data-bgset="images/skins/electronics/slider/slide-electronics-02-m.webp"
+                                 th:data-bgset="@{/image_upload/slide-electronics-02.webp}"
                                  data-sizes="auto"></div>
                             <div class="bnslider-image lazyload fade-up-fast"
-                                 data-bgset="images/skins/electronics/slider/slide-electronics-02.webp"
+                                 th:data-bgset="@{/image_upload/slide-electronics-02.webp}"
                                  data-sizes="auto"></div>
                             <div class="bnslider-text-wrap bnslider-overlay container">
                                 <div class="bnslider-text-content txt-middle txt-right txt-middle-m txt-center-m">
@@ -569,8 +569,8 @@
                                                                                                        class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
                                                                                                        title="Remove From Wishlist"><i
                                         class="icon-heart-hover"></i></a>
-                                    <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html"><i
+                                    <a class="circle-label-qview js-prd-quickview prd-hide-mobile"
+                                       data-src="ajax/ajax-quickview.html" th:onclick="display_viewquick([[${productItem.id}]]);"><i
                                             class="icon-eye"></i><span>QUICK VIEW</span></a>
                                 </div>
                             </div>
@@ -594,13 +594,18 @@
                                                                                                                 class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
                                                                                                                 title="Remove From Wishlist"><i
                                                 class="icon-heart-hover"></i></a></div>
-                                        <div><a href="#" class="circle-label-qview prd-hide-mobile js-prd-quickview"
+                                        <div><a class="circle-label-qview prd-hide-mobile js-prd-quickview"
                                                 data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
                                         </div>
                                     </div>
                                     <div class="prd-price">
-                                        <div class="price-old">$ [[${productItem.price}]]</div>
-                                        <div class="price-new">$ [[${productItem.discountPrice}]]</div>
+                                        <th:block th:if="${productItem.discountPrice}">
+                                            <div class="price-old">$ [[${productItem.price}]]</div>
+                                            <div class="price-new">$ [[${productItem.discountPrice}]]</div>
+                                        </th:block>
+                                        <th:block th:unless="${productItem.discountPrice}">
+                                            <div class="price-new">$ [[${productItem.price}]]</div>
+                                        </th:block>
                                     </div>
                                     <div class="prd-action">
                                         <div class="prd-action-left">
@@ -722,8 +727,8 @@
                                                                                                            class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
                                                                                                            title="Remove From Wishlist"><i
                                             class="icon-heart-hover"></i></a>
-                                        <a href="#" class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                           data-src="ajax/ajax-quickview.html"><i
+                                        <a class="circle-label-qview js-prd-quickview prd-hide-mobile"
+                                           data-src="ajax/ajax-quickview.html" th:onclick="display_viewquick([[${productItem.id}]]);"><i
                                                 class="icon-eye"></i><span>QUICK VIEW</span></a>
                                     </div>
                                     <ul class="list-options color-swatch">
@@ -780,14 +785,23 @@
                                                     class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
                                                     title="Remove From Wishlist"><i
                                                     class="icon-heart-hover"></i></a></div>
-                                            <div class="prd-hide-mobile"><a href="#"
-                                                                            class="circle-label-qview js-prd-quickview"
-                                                                            data-src="ajax/ajax-quickview.html"><i
-                                                    class="icon-eye"></i><span>QUICK VIEW</span></a></div>
+                                            <div class="prd-hide-mobile">
+                                                <a
+                                                    class="circle-label-qview js-prd-quickview"
+                                                    data-src="ajax/ajax-quickview.html" th:onclick="display_viewquick([[${productItem.id}]]);">
+                                                    <i class="icon-eye"></i>
+                                                    <span>QUICK VIEW</span>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="prd-price">
-                                            <div class="price-old">$ [[${productItem.price}]]</div>
-                                            <div class="price-new">$ [[${productItem.discountPrice}]]</div>
+                                            <th:block th:if="${productItem.discountPrice}">
+                                                <div class="price-old">$ [[${productItem.price}]]</div>
+                                                <div class="price-new">$ [[${productItem.discountPrice}]]</div>
+                                            </th:block>
+                                            <th:block th:unless="${productItem.discountPrice}">
+                                                <div class="price-new">$ [[${productItem.price}]]</div>
+                                            </th:block>
                                         </div>
                                         <div class="prd-action">
                                             <div class="prd-action-left">
@@ -878,6 +892,8 @@
             </div>
         </div>
     </div>
+</div>
+<div id="quick_view" class="hidden-md" style="display: none;">
 </div>
 </body>
 </html>

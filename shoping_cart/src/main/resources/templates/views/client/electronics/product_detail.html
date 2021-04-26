@@ -1,10 +1,10 @@
-<div class="fancybox-container fancybox-is-open" id="fancybox-container-3" style="transition-duration: 366ms;">
+<div class="fancybox-container fancybox-is-open" id="fancybox-container-1" style="transition-duration: 366ms;"
+     xmlns:th="http://thymeleaf.org">
     <div class="fancybox-bg"></div>
-    <div class="fancybox-inner">
+    <div class="fancybox-inner" th:object="${productDTO}">
         <div class="fancybox-stage">
             <div class="fancybox-slide fancybox-slide--html fancybox-slide--current fancybox-slide--complete" style="">
-                <div class="modal--quickview modal-quickview--classic fancybox-content" id="modalQuickView"
-                     style="margin-bottom: 30px;">
+                <div class="modal--quickview modal-quickview--classic fancybox-content" id="modalQuickView" style="">
                     <div class="modal-content">
                         <div class="prd-block prd-block--prv-bottom" id="prdGalleryModal">
                             <div class="row no-gutters">
@@ -24,26 +24,50 @@
                                                              class="slick-slide slick-current slick-active"
                                                              data-slick-index="0" aria-hidden="false"
                                                              style="width: 515px;" tabindex="0">
-                                                        <span class="prd-img">
-                                                            <div style="height:661.683px;width:515px;"
-                                                                 class="zoomWrapper">
-                                                                <img data-src="images/skins/fashion/product-page/product-01.webp"
-                                                                     class="fade-up elzoom ls-is-cached lazyloaded"
-                                                                     alt=""
-                                                                     data-zoom-image="images/skins/fashion/product-page/product-01.webp"
-                                                                     src="images/skins/fashion/product-page/product-01.webp"
-                                                                     style="position: absolute;">
-                                                            </div>
-                                                        </span>
+                                                            <span class="prd-img">
+                                                                <div style="height:661.688px;width:515px;" class="zoomWrapper">
+                                                                    <div style="height:661.7px;width:515px;" class="zoomWrapper">
+                                                                        <div style="height:661.7px;width:515px;" class="zoomWrapper">
+                                                                            <div style="height:661.7px;width:515px;" class="zoomWrapper">
+                                                                                <div style="height:661.7px;width:515px;" class="zoomWrapper">
+                                                                                    <div style="height:661.7px;width:515px;" class="zoomWrapper">
+                                                                                        <div style="height:661.7px;width:515px;" class="zoomWrapper">
+                                                                                            <th:block th:each="imageItem : *{imageDTOList}">
+                                                                                                <th:block th:if="${imageItem.is_preview}">
+                                                                                                  <img
+                                                                                                          th:data-src="@{/image_upload/{path}(path=${imageItem.path})}"
+                                                                                                          class="fade-up elzoom ls-is-cached lazyloaded" alt=""
+                                                                                                          th:data-zoom-image="@{/image_upload/{path}(path=${imageItem.path})}"
+                                                                                                          th:src="@{/image_upload/{path}(path=${imageItem.path})}"
+                                                                                                          style="position: absolute;">
+                                                                                                </th:block>
+                                                                                            </th:block>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
                                                         </div>
                                                         <div data-value="Beige" class="slick-slide" data-slick-index="1"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-02.webp"
-                                                                 class="fade-up elzoom ls-is-cached lazyloaded" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-02.webp"
-                                                                 src="images/skins/fashion/product-page/product-02.webp">
-                                                        </span>
+                                                            <span class="prd-img"><div
+                                                                    style="height:661.688px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><img
+                                                                    data-src="images/skins/fashion/product-page/product-02.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-02.webp"
+                                                                    src="images/skins/fashion/product-page/product-02.webp"
+                                                                    style="position: absolute;"></div></div></div></div></span>
                                                         </div>
                                                         <div class="inner-video js-inner-video slick-slide"
                                                              data-slick-index="2" aria-hidden="true"
@@ -56,71 +80,241 @@
                                                         </div>
                                                         <div data-value="Beige" class="slick-slide" data-slick-index="3"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-03.webp"
-                                                                 class="fade-up elzoom ls-is-cached lazyloaded" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-03.webp"
-                                                                 src="images/skins/fashion/product-page/product-03.webp">
-                                                        </span>
+                                                            <span class="prd-img"><div
+                                                                    style="height:661.688px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><img
+                                                                    data-src="images/skins/fashion/product-page/product-03.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-03.webp"
+                                                                    src="images/skins/fashion/product-page/product-03.webp"
+                                                                    style="position: absolute;"></div></div></div></span>
                                                         </div>
                                                         <div data-value="Black" class="slick-slide" data-slick-index="4"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-04.webp"
-                                                                 class="fade-up elzoom ls-is-cached lazyloaded" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-04.webp"
-                                                                 src="images/skins/fashion/product-page/product-04.webp">
-                                                        </span>
+                                                            <span class="prd-img"><div
+                                                                    style="height:661.675px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><img
+                                                                    data-src="images/skins/fashion/product-page/product-04.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-04.webp"
+                                                                    src="images/skins/fashion/product-page/product-04.webp"
+                                                                    style="position: absolute;"></div></div></span>
                                                         </div>
                                                         <div data-value="Black" class="slick-slide" data-slick-index="5"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-05.webp"
-                                                                 class="lazyload fade-up elzoom" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-05.webp">
-                                                        </span>
+                                                            <span class="prd-img"><div
+                                                                    style="height:661.675px;width:515px;"
+                                                                    class="zoomWrapper"><div
+                                                                    style="height:661.7px;width:515px;"
+                                                                    class="zoomWrapper"><img
+                                                                    data-src="images/skins/fashion/product-page/product-05.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-05.webp"
+                                                                    src="images/skins/fashion/product-page/product-05.webp"
+                                                                    style="position: absolute;"></div></div></span>
                                                         </div>
                                                         <div data-value="Black" class="slick-slide" data-slick-index="6"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-06.webp"
-                                                                 class="lazyload fade-up elzoom" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-06.webp">
-                                                        </span>
-                                                        </div>
+                                                            <span class="prd-img"><div
+                                                                    style="height:661.675px;width:515px;"
+                                                                    class="zoomWrapper"><img
+                                                                    data-src="images/skins/fashion/product-page/product-06.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-06.webp"
+                                                                    src="images/skins/fashion/product-page/product-06.webp"
+                                                                    style="position: absolute;"></div></span></div>
                                                         <div data-value="Red" class="slick-slide" data-slick-index="7"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-07.webp"
-                                                                 class="lazyload fade-up elzoom" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-07.webp">
-                                                        </span>
+                                                            <span class="prd-img"><img
+                                                                    data-src="images/skins/fashion/product-page/product-07.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-07.webp"
+                                                                    src="images/skins/fashion/product-page/product-07.webp"></span>
                                                         </div>
                                                         <div data-value="Red" class="slick-slide" data-slick-index="8"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-08.webp"
-                                                                 class="lazyload fade-up elzoom" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-08.webp">
-                                                        </span>
+                                                            <span class="prd-img"><img
+                                                                    data-src="images/skins/fashion/product-page/product-08.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-08.webp"
+                                                                    src="images/skins/fashion/product-page/product-08.webp"></span>
                                                         </div>
                                                         <div data-value="Red" class="slick-slide" data-slick-index="9"
                                                              aria-hidden="true" style="width: 515px;" tabindex="-1">
-                                                        <span class="prd-img">
-                                                            <img data-src="images/skins/fashion/product-page/product-09.webp"
-                                                                 class="lazyload fade-up elzoom" alt=""
-                                                                 data-zoom-image="images/skins/fashion/product-page/product-09.webp">
-                                                        </span>
+                                                            <span class="prd-img"><img
+                                                                    data-src="images/skins/fashion/product-page/product-09.webp"
+                                                                    class="fade-up elzoom ls-is-cached lazyloaded"
+                                                                    alt=""
+                                                                    data-zoom-image="images/skins/fashion/product-page/product-09.webp"
+                                                                    src="images/skins/fashion/product-page/product-09.webp"></span>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                                 <button class="slick-next slick-arrow" aria-label="Next" type="button"
                                                         aria-disabled="false" style="">Next
                                                 </button>
-                                                <div class="zoomContainer" uuid="5cd06968-4e75-4e96-b5f2-fb0a83ac0092"
+                                                <div class="zoomContainer" uuid="8a2578f4-8eca-4caf-9d89-647299100c05"
+                                                     style="position: absolute; top: 0px; left: -512.001px; height: 661.7px; width: 515px; z-index: 149;">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.688px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="e06011cb-3a03-4b04-b98a-49797ca292d4"
                                                      style="position: absolute; top: 0px; left: 0px; height: 661.7px; width: 515px; z-index: 149;">
                                                     <div class="zoomWindowContainer" style="width: 400px;">
-                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.683px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.688px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-02.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="fe5f3fd4-1b8c-4992-b6a9-dbfa35f11a48"
+                                                     style="position: absolute; top: 0px; left: 0px; height: 661.7px; width: 515px; z-index: 149;">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.688px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-03.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="0813bcb2-352e-47a5-aa11-6e124296b2d0"
+                                                     style="position: absolute; top: 0px; left: 512.006px; height: 661.7px; width: 515px; z-index: 149;">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-02.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="618fc7a6-f748-4863-a077-ff4f9d33c4a0"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="493da6ad-1a13-4096-9627-419a40785d85"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="8a40c4fb-52f8-476e-a0f3-3db2b0fda1d6"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="ef40295b-099f-4af7-8576-25550b31b90d"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="60ec1713-35d2-4915-b72c-99439599b0b1"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="3b106dff-9011-4a4b-a680-aa6af399a992"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-02.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="738c9560-4397-46d5-a1d7-d1bba6230d11"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-03.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="62412f4f-6d89-4c2e-81c6-f8ae8870dfbd"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.675px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.675px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-04.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="cadfe0cc-3f40-4572-9ccd-70456b07824e"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.675px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.675px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-05.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="202fb9f4-9398-40f3-a7e5-8cb6113cfc9a"
+                                                     style="position: absolute; top: 0px; left: 0px; height: 661.7px; width: 515px; z-index: 149;">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.675px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-06.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="aeb2be87-43d4-414e-8817-91e625b2e4d0"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-05.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="5d01e329-3398-4159-b870-b96b6117cc35"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-04.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="67882981-f56d-445c-9906-cc555e0c4c60"
+                                                     style="position: absolute; top: 0px; left: 515px; height: 661.7px; width: 515px; z-index: 149;">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-03.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="f88c85b4-19d4-4441-801b-5d7c035315b2"
+                                                     style="position: absolute; top: 0px; left: 515px; height: 661.7px; width: 515px; z-index: 149;">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-02.webp&quot;);"
+                                                             class="zoomWindow">&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="zoomContainer" uuid="8e228601-503d-429d-a45d-17ac57c0e229"
+                                                     style="position: absolute;top: 0px;left: 0px;height: 661.7px;width: 515px;z-index: 149">
+                                                    <div class="zoomWindowContainer" style="width: 400px;">
+                                                        <div style="z-index: 999; display: none; position: absolute; float: left; height: 661.7px; width: 515px; margin-top: 0px; margin-left: 0px; border: 4px solid rgb(136, 136, 136); background-position: 0px 0px; background-repeat: no-repeat; cursor: crosshair; overflow: hidden; background-image: url(&quot;images/skins/fashion/product-page/product-01.webp&quot;);"
                                                              class="zoomWindow">&nbsp;
                                                         </div>
                                                     </div>
@@ -135,7 +329,7 @@
                                             <div class="prd-block_viewed prd-block_viewed--real-time">
                                                 <div class="prd-block_visitiors">Real time <span
                                                         class="prd-block_visitiors-count js-visitors-now"
-                                                        data-vmax="100" data-vmin="10">86</span> visitor right now!
+                                                        data-vmax="100" data-vmin="10">37</span> visitor right now!
                                                 </div>
                                                 <i class="icon-user"></i>
                                             </div>
@@ -150,51 +344,15 @@
                                             <div class="slick-list draggable">
                                                 <div class="slick-track"
                                                      style="opacity: 1; width: 1610px; transform: translate3d(0px, 0px, 0px);">
-                                                    <a href="#" data-value="Beige"
-                                                       class="slick-slide slick-current slick-active"
-                                                       data-slick-index="0" aria-hidden="false" tabindex="0"
-                                                       style="width: 161px;"><img
-                                                            src="images/skins/fashion/product-page/product-01.webp"
-                                                            alt=""></a><a href="#" data-value="Beige"
-                                                                          class="slick-slide slick-active"
-                                                                          data-slick-index="1" aria-hidden="false"
-                                                                          tabindex="0" style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-02.webp" alt=""></a><a
-                                                        href="#"
-                                                        class="prd-block_video-link video-slide slick-slide slick-active"
-                                                        data-slick-index="2" aria-hidden="false" tabindex="0"
-                                                        style="width: 161px;">
-                                                    <span><span><i class="icon icon-play"></i><img
-                                                            src="images/skins/fashion/product-page/product-video.webp"
-                                                            alt=""></span></span>
-                                                </a><a href="#" data-value="Beige" class="slick-slide"
-                                                       data-slick-index="3" aria-hidden="true" tabindex="-1"
-                                                       style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-03.webp" alt=""></a><a
-                                                        href="#" data-value="Black" class="slick-slide"
-                                                        data-slick-index="4" aria-hidden="true" tabindex="-1"
-                                                        style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-04.webp" alt=""></a><a
-                                                        href="#" data-value="Black" class="slick-slide"
-                                                        data-slick-index="5" aria-hidden="true" tabindex="-1"
-                                                        style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-05.webp" alt=""></a><a
-                                                        href="#" data-value="Black" class="slick-slide"
-                                                        data-slick-index="6" aria-hidden="true" tabindex="-1"
-                                                        style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-06.webp" alt=""></a><a
-                                                        href="#" data-value="Red" class="slick-slide"
-                                                        data-slick-index="7" aria-hidden="true" tabindex="-1"
-                                                        style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-07.webp" alt=""></a><a
-                                                        href="#" data-value="Red" class="slick-slide"
-                                                        data-slick-index="8" aria-hidden="true" tabindex="-1"
-                                                        style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-08.webp" alt=""></a><a
-                                                        href="#" data-value="Red" class="slick-slide"
-                                                        data-slick-index="9" aria-hidden="true" tabindex="-1"
-                                                        style="width: 161px;"><img
-                                                        src="images/skins/fashion/product-page/product-09.webp" alt=""></a>
+                                                    <th:block th:each="imageItem, state : *{imageDTOList}">
+                                                        <a data-value="Beige"
+                                                           class="slick-slide slick-current slick-active active"
+                                                           th:data-slick-index="${state.index}" aria-hidden="false" tabindex="0"
+                                                           style="width: 161px;">
+                                                            <img th:src="@{/image_upload/{path}(path=${imageItem.path})}"
+                                                                th:alt="*{name}">
+                                                        </a>
+                                                    </th:block>
                                                 </div>
                                             </div>
 
@@ -206,39 +364,38 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-9 quickview-info ps ps--theme_default"
-                                     data-ps-id="561d85d5-88c7-746c-237a-7de967604d1e"
-                                     style="min-height: 683px; height: 683px;">
+                                     style="min-height: 1382px; height: 1382px;"
+                                     data-ps-id="08d81736-f219-1921-2a92-42c2f7e28c4e">
                                     <div class="prd-block_info prd-block_info--style2">
 
                                         <div class="prd-block_title-wrap">
-                                            <h1 class="prd-block_title">Leather Pegged Pants</h1>
+                                            <h1 class="prd-block_title" th:text="*{name}"></h1>
                                         </div>
                                         <div class="prd-block_price">
-                                            <div class="prd-block_price--actual">$154</div>
-                                            <div class="prd-block_price-old-wrap">
-                                                <span class="prd-block_price--old">$184</span>
-                                                <span class="prd-block_price--text">You Save: <span>$30</span> (<span>16</span>%)</span>
-                                            </div>
+                                            <div class="prd-block_price--actual">$<span th:text="*{discountPrice} ? *{discountPrice} : *{price} "></span></div>
+                                            <th:block th:if="*{discountPrice}">
+                                                <div class="prd-block_price-old-wrap">
+                                                    <span class="prd-block_price--old">$[[*{price}]]</span>
+                                                    <span class="prd-block_price--text">You Save: <span>$[[*{discountPrice - price}]]</span> (<span>[[100-*{discountPrice*100 / price}]]</span>%)</span>
+                                                </div>
+                                            </th:block>
                                         </div>
                                         <div class="prd-block_description prd-block_info_item">
-                                            <p>Model is 5'9" wearing Size XS TallAnd without further ado, we give you
-                                                our finest Shopify Theme FOXic! It is a subtle, complex and yet an
-                                                extremely easy to use template for anyone, who wants to create own
-                                                website in ANY area of expertise.</p>
+                                            <p th:text="*{description}"></p>
                                             <div class="mt-1"></div>
                                             <div class="row vert-margin-less">
-                                                <div class="col-sm">
-                                                    <ul class="list-marker">
-                                                        <li>100% Polyester</li>
-                                                        <li>Lining:100% Viscose</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-sm">
-                                                    <ul class="list-marker">
-                                                        <li>Do not dry clean</li>
-                                                        <li>Only non-chlorine</li>
-                                                    </ul>
-                                                </div>
+<!--                                                <div class="col-sm">-->
+<!--                                                    <ul class="list-marker">-->
+<!--                                                        <li>100% Polyester</li>-->
+<!--                                                        <li>Lining:100% Viscose</li>-->
+<!--                                                    </ul>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-sm">-->
+<!--                                                    <ul class="list-marker">-->
+<!--                                                        <li>Do not dry clean</li>-->
+<!--                                                        <li>Only non-chlorine</li>-->
+<!--                                                    </ul>-->
+<!--                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="prd-block_options">
@@ -333,7 +490,7 @@
                                         <div class="prd-block_info_item mt-3 row row--sm-pad vert-margin-middle">
                                             <div class="col"><a href="product.html" class="btn btn--grey w-100">View
                                                 Full Info</a></div>
-                                            <div class="col"><a href="product.html" class="btn btn--grey w-100"
+                                            <div class="col"><a class="btn btn--grey w-100" th:onclick="closeQuickView()"
                                                                 data-fancybox-close="">Close</a></div>
                                         </div>
                                     </div>

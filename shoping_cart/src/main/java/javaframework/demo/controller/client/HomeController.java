@@ -28,9 +28,10 @@ public class HomeController {
         return "views/client/electronics/index";
     }
 
-    @GetMapping(value = "/product/{id}/detail")
+    @GetMapping(value = "/product/quick_view_info/{id}")
     public String showProductDetail(Model model, @PathVariable(name = "id") Long id){
         model.addAttribute("productDTO", productService.findOne(id));
         return "views/client/electronics/product_detail";
     }
+
 }

@@ -33,7 +33,7 @@ public class ProductEntity extends BaseEntity{
     private String sku;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_value_id")
     private CategoryValueEntity categoryEntity;
 
     @OneToMany(mappedBy = "productEntity")

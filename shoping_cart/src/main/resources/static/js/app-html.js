@@ -3363,57 +3363,57 @@ function onYouTubeIframeAPIReady() {
 					    $modalQuickView = $('#modalQuickView');
 					var $mainCarousel = $('.js-product-main-carousel-qw'),
 					    $prwCarousel = $('.js-product-previews-carousel-qw');
-					$document.on('click', '.js-prd-quickview', function (e) {
-						var src = $(this).data('src');
-						$.fancybox.open({
-							src: src,
-							backFocus: false,
-							type: 'ajax',
-							image: {
-								preload: true
-							},
-							afterShow: function afterShow() {
-								THEME.product.productPageGallery(true);
-								THEME.product.swatchToggle('#modalQuickView .prd-color.swatches');
-								setTimeout(function () {
-									$('.quickview-gallery').css({ 'opacity': '1' });
-								}, 500);
-
-								if ($('.js-product-previews-carousel-qw').length) {
-									$('.js-product-previews-carousel-qw').slick('setPosition');
-								}
-								THEME.initialization.countdown('#modalQuickView .js-countdown');
-								THEME.productPage.visitorsNow();
-								THEME.initialization.tooltipIni($('#modalQuickView [data-toggle="tooltip"]'));
-								that._setScroll();
-								if (isMobile) bodyScrollLock.disableBodyScroll($modalQuickView);
-							},
-							beforeShow: function beforeShow() {
-								THEME.selectModal && THEME.selectModal.ifOpened() && THEME.selectModal.close();
-								THEME.checkOutModal && THEME.checkOutModal.ifOpened() && THEME.checkOutModal.close();
-								THEME.selectSticky && THEME.selectSticky.hide();
-								$body.addClass('fancybox--under-modals');
-							},
-							beforeClose: function beforeClose() {
-								$('.zoom-container').remove();
-								THEME.productpagegallery_qw.destroy();
-								delete THEME.productpagegallery_qw;
-							},
-							afterClose: function afterClose() {
-								THEME.selectSticky ? THEME.selectSticky.show() : false;
-								THEME.productpagegallery ? THEME.productpagegallery.reinitZoom() : false;
-								$body.removeClass('fancybox--under-modals');
-								if (isMobile) bodyScrollLock.enableBodyScroll($modalQuickView);
-							},
-
-							touch: false,
-							btnTpl: {
-								smallBtn: '<div data-fancybox-close class="fancybox-close-small modal-close"><i class="icon-close"></i></div>'
-							},
-							baseTpl: '<div class="fancybox-container">' + '<div class="fancybox-bg"></div>' + '<div class="fancybox-inner">' + '<div class="fancybox-stage"></div>' + "</div>" + "</div>"
-						});
-						e.preventDefault();
-					});
+					// $document.on('click', '.js-prd-quickview', function (e) {
+					// 	var src = $(this).data('src');
+					// 	$.fancybox.open({
+					// 		src: src,
+					// 		backFocus: false,
+					// 		type: 'ajax',
+					// 		image: {
+					// 			preload: true
+					// 		},
+					// 		afterShow: function afterShow() {
+					// 			THEME.product.productPageGallery(true);
+					// 			THEME.product.swatchToggle('#modalQuickView .prd-color.swatches');
+					// 			setTimeout(function () {
+					// 				$('.quickview-gallery').css({ 'opacity': '1' });
+					// 			}, 500);
+					//
+					// 			if ($('.js-product-previews-carousel-qw').length) {
+					// 				$('.js-product-previews-carousel-qw').slick('setPosition');
+					// 			}
+					// 			THEME.initialization.countdown('#modalQuickView .js-countdown');
+					// 			THEME.productPage.visitorsNow();
+					// 			THEME.initialization.tooltipIni($('#modalQuickView [data-toggle="tooltip"]'));
+					// 			that._setScroll();
+					// 			if (isMobile) bodyScrollLock.disableBodyScroll($modalQuickView);
+					// 		},
+					// 		beforeShow: function beforeShow() {
+					// 			THEME.selectModal && THEME.selectModal.ifOpened() && THEME.selectModal.close();
+					// 			THEME.checkOutModal && THEME.checkOutModal.ifOpened() && THEME.checkOutModal.close();
+					// 			THEME.selectSticky && THEME.selectSticky.hide();
+					// 			$body.addClass('fancybox--under-modals');
+					// 		},
+					// 		beforeClose: function beforeClose() {
+					// 			$('.zoom-container').remove();
+					// 			THEME.productpagegallery_qw.destroy();
+					// 			delete THEME.productpagegallery_qw;
+					// 		},
+					// 		afterClose: function afterClose() {
+					// 			THEME.selectSticky ? THEME.selectSticky.show() : false;
+					// 			THEME.productpagegallery ? THEME.productpagegallery.reinitZoom() : false;
+					// 			$body.removeClass('fancybox--under-modals');
+					// 			if (isMobile) bodyScrollLock.enableBodyScroll($modalQuickView);
+					// 		},
+					//
+					// 		touch: false,
+					// 		btnTpl: {
+					// 			smallBtn: '<div data-fancybox-close class="fancybox-close-small modal-close"><i class="icon-close"></i></div>'
+					// 		},
+					// 		baseTpl: '<div class="fancybox-container">' + '<div class="fancybox-bg"></div>' + '<div class="fancybox-inner">' + '<div class="fancybox-stage"></div>' + "</div>" + "</div>"
+					// 	});
+					// 	e.preventDefault();
+					// });
 				},
 				reinit: function reinit() {
 					if (this.ifOpened()) {
