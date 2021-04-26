@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class OrderDetailDTO extends AbstractDTO<OrderDetailDTO>{
-    private final ProducDTO productDTO;
+    private final ProductDTO productDTO;
     private Long price;
     private Integer quantity;
     private Long subTotal;
@@ -14,14 +14,14 @@ public class OrderDetailDTO extends AbstractDTO<OrderDetailDTO>{
         this.productDTO = productDTO;
         this.quantity = 1;
         this.subTotal = productDTO.getPrice();
-        if( productDTO.getPricePromotion() != null ){
-            this.price = productDTO.getPricePromotion();
+        if( productDTO.getDiscountPrice() != null ){
+            this.price = productDTO.getDiscountPrice();
         }
         else this.price = productDTO.getPrice();
     }
 
     public Long getSubTotal() {
-        subTotal = productDTO.getPrice()*quantity;
+        subTotal = price*quantity;
         return subTotal;
     }
 }

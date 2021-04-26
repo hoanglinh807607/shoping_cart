@@ -6,8 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserConverter {
+public class UserConverter extends AbstractConverter<UserDTO> implements IAbstractConverter<UserDTO, UserEntity> {
 
+    @Override
     public UserDTO toDto(UserEntity entity) {
         UserDTO dto = new UserDTO();
         dto.setEmail(entity.getEmail());
@@ -19,14 +20,16 @@ public class UserConverter {
             dto.getRoleId().add(e.getId());
             dto.getRoleName().add(e.getName());
         });
-        return dto;
+        return toDto(dto,entity);
     }
 
+    @Override
     public UserEntity toEntity(UserDTO dto) {
         UserEntity result = new UserEntity();
         return getUserEntity(result, dto);
     }
 
+    @Override
     public UserEntity toEntity(UserEntity entity, UserDTO dto) {
         return getUserEntity(entity, dto);
     }
@@ -38,6 +41,9 @@ public class UserConverter {
         entity.setFullName(dto.getFullName());
         entity.setPhone(dto.getPhone());
         entity.setAddress(dto.getAddress());
+        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
+        else entity.setStatus(1);
         return entity;
     }
+
 }

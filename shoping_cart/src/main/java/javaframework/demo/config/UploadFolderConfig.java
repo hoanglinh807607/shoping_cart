@@ -11,6 +11,9 @@ public class UploadFolderConfig implements WebMvcConfigurer {
     String upload_folder;
     @Override // dấu ** được hiểu là map tất cả file trong thư mục góc vào thư mục ảo. image_upload là thư mục ảo
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("image_upload/**").addResourceLocations("file:"+upload_folder);
+        registry.addResourceHandler("image_upload/**")
+                .addResourceLocations("file:"+upload_folder+"electronics-category\\")
+                .addResourceLocations("file:"+upload_folder+"electroni-logo\\")
+                .addResourceLocations("file:"+upload_folder+"electroni-products\\");
     }
 }
