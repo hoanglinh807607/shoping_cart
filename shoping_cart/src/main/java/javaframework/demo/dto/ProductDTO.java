@@ -14,6 +14,7 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
     private String description;
     private String content;
     private String sku;
+    private Integer love;
     private Long categoryId;
     private String categoryName;
     private List<ImageDTO> imageDTOList = new ArrayList<>();

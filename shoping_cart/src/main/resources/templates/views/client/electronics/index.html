@@ -536,101 +536,105 @@
             </div>
             <div class="prd-grid-wrap position-relative">
                 <div class="prd-grid data-to-show-3 data-to-show-lg-3 data-to-show-md-2 data-to-show-sm-2 data-to-show-xs-2 js-category-grid">
-                    <div class="prd prd-hor " th:each="categoryValue, state : *{categoryValueDTOS}"
-                         th:if="${state.index<6}">
-                        <div class="prd-inside" th:each="productItem,state : ${categoryValue.productDTOList}"
-                             th:if="${state.index<1}">
-                            <div class="prd-img-area">
-                                <a href="product.html" class="prd-img image-hover-scale image-container">
-                                    <th:block th:each="itemImage : ${productItem.imageDTOList}">
-                                        <th:block th:if="${itemImage.is_preview}">
-                                            <img th:src="@{/image_upload/{path}(path=${itemImage.path})}"
-                                                 th:alt="${categoryValue.name}"
-                                                 class="js-prd-img lazyload">
+                    <th:block th:each="categoryValue, state : *{categoryValueDTOS}"
+                              th:if="${state.index<6}">
+                        <div class="prd prd-hor " th:each="productItem,state : ${categoryValue.productDTOList}"
+                             th:if="${state.index<1}" th:classappend="${productItem.love} ? prd--in-wishlist">
+                            <div class="prd-inside">
+                                <div class="prd-img-area">
+                                    <a href="product.html" class="prd-img image-hover-scale image-container">
+                                        <th:block th:each="itemImage : ${productItem.imageDTOList}">
+                                            <th:block th:if="${itemImage.is_preview}">
+                                                <img th:src="@{/image_upload/{path}(path=${itemImage.path})}"
+                                                     th:alt="${categoryValue.name}"
+                                                     class="js-prd-img lazyload">
+                                            </th:block>
                                         </th:block>
-                                    </th:block>
-                                    <div class="foxic-loader"></div>
-                                    <th:block th:if="${productItem.discountPrice}">
-                                        <div class="prd-big-circle-labels">
-                                            <div class="label-sale"><span>-[[100-${productItem.discountPrice*100 / productItem.price}]]% <span
-                                                    class="sale-text">Sale</span></span>
-                                                <div class="countdown-circle">
-                                                    <div class="countdown js-countdown"
-                                                         data-countdown="2021/07/01"></div>
+                                        <div class="foxic-loader"></div>
+                                        <th:block th:if="${productItem.discountPrice}">
+                                            <div class="prd-big-circle-labels">
+                                                <div class="label-sale"><span>-[[100-${productItem.discountPrice*100 / productItem.price}]]% <span
+                                                        class="sale-text">Sale</span></span>
+                                                    <div class="countdown-circle">
+                                                        <div class="countdown js-countdown"
+                                                             data-countdown="2021/07/01"></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </th:block>
-                                </a>
-                                <div class="prd-circle-labels">
-                                    <a href="#"
-                                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                       title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                       title="Remove From Wishlist"><i
-                                        class="icon-heart-hover"></i></a>
-                                    <a class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                                       data-src="ajax/ajax-quickview.html" th:onclick="display_viewquick([[${productItem.id}]]);"><i
-                                            class="icon-eye"></i><span>QUICK VIEW</span></a>
-                                </div>
-                            </div>
-                            <div class="prd-info">
-                                <div class="prd-info-wrap">
-                                    <div class="prd-info-top">
-                                        <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                                class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="prd-title"><a href="product.html" th:text="${productItem.name}"></a></h2>
-                                    <div class="prd-description" th:text="${productItem.description}">
-                                    </div>
-                                </div>
-                                <div class="prd-hovers">
+                                        </th:block>
+                                    </a>
                                     <div class="prd-circle-labels">
-                                        <div><a href="#"
-                                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                                title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                                                                                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                                                                                title="Remove From Wishlist"><i
-                                                class="icon-heart-hover"></i></a></div>
-                                        <div><a class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                                                data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
+                                        <a
+                                           class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                           title="Add To Wishlist" th:onclick="changeLikeProduct([[${productItem.id}]],1)">
+                                            <i class="icon-heart-stroke"></i>
+                                        </a>
+                                        <a class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                           title="Remove From Wishlist" th:onclick="changeLikeProduct([[${productItem.id}]],0)">
+                                            <i class="icon-heart-hover" ></i>
+                                        </a>
+                                        <a class="circle-label-qview js-prd-quickview prd-hide-mobile"
+                                           data-src="ajax/ajax-quickview.html" th:onclick="display_viewquick([[${productItem.id}]]);"><i
+                                                class="icon-eye"></i><span>QUICK VIEW</span></a>
+                                    </div>
+                                </div>
+                                <div class="prd-info">
+                                    <div class="prd-info-wrap">
+                                        <div class="prd-info-top">
+                                            <div class="prd-rating"><i class="icon-star-fill fill"></i><i
+                                                    class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
+                                                    class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
+                                            </div>
+                                        </div>
+                                        <h2 class="prd-title"><a href="product.html" th:text="${productItem.name}"></a></h2>
+                                        <div class="prd-description" th:text="${productItem.description}">
                                         </div>
                                     </div>
-                                    <div class="prd-price">
-                                        <th:block th:if="${productItem.discountPrice}">
-                                            <div class="price-old">$ [[${productItem.price}]]</div>
-                                            <div class="price-new">$ [[${productItem.discountPrice}]]</div>
-                                        </th:block>
-                                        <th:block th:unless="${productItem.discountPrice}">
-                                            <div class="price-new">$ [[${productItem.price}]]</div>
-                                        </th:block>
-                                    </div>
-                                    <div class="prd-action">
-                                        <div class="prd-action-left">
-                                            <form action="#">
-                                                <button class="btn js-prd-addtocart"
-                                                        data-product='{"name": "iPhone X", "path":"images/skins/electronics/products/product-01-1.webp", "url":"product.html", "aspect_ratio":0.778}'>
-                                                    Add To Cart
-                                                </button>
-                                            </form>
+                                    <div class="prd-hovers">
+                                        <div class="prd-circle-labels">
+                                            <div><a href="#"
+                                                    class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                                    title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
+                                                                                                                    class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                                                                                                    title="Remove From Wishlist"><i
+                                                    class="icon-heart-hover"></i></a></div>
+                                            <div><a class="circle-label-qview prd-hide-mobile js-prd-quickview"
+                                                    data-src="ajax/ajax-quickview.html"><i class="icon-eye"></i><span>QUICK VIEW</span></a>
+                                            </div>
                                         </div>
-                                        <div class="prd-action-right">
-                                            <div class="prd-action-right-inside">
-                                                <div class="prd-tag"><a href="#">FOXic</a></div>
-                                                <div class="prd-rating"><i class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i><i
-                                                        class="icon-star-fill fill"></i></div>
+                                        <div class="prd-price">
+                                            <th:block th:if="${productItem.discountPrice}">
+                                                <div class="price-old">$ [[${productItem.price}]]</div>
+                                                <div class="price-new">$ [[${productItem.discountPrice}]]</div>
+                                            </th:block>
+                                            <th:block th:unless="${productItem.discountPrice}">
+                                                <div class="price-new">$ [[${productItem.price}]]</div>
+                                            </th:block>
+                                        </div>
+                                        <div class="prd-action">
+                                            <div class="prd-action-left">
+                                                <form action="#">
+                                                    <button class="btn js-prd-addtocart">
+                                                        Add To Cart
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="prd-action-right">
+                                                <div class="prd-action-right-inside">
+                                                    <div class="prd-tag"><a href="#">FOXic</a></div>
+                                                    <div class="prd-rating"><i class="icon-star-fill fill"></i><i
+                                                            class="icon-star-fill fill"></i><i
+                                                            class="icon-star-fill fill"></i><i
+                                                            class="icon-star-fill fill"></i><i
+                                                            class="icon-star-fill fill"></i></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -697,7 +701,7 @@
                     <th:block th:each="categoryValue, state : *{categoryValueDTOS}" th:if="${state.index<8}">
                         <div class="prd prd--style2 prd-labels--max prd-labels-shadow"
                              th:each="productItem,state : ${categoryValue.productDTOList}" th:if="${state.index<1}">
-                            <div class="prd-inside">
+                            <div class="prd-inside" >
                                 <div class="prd-img-area">
                                     <a href="product.html" class="prd-img image-hover-scale image-container">
                                         <th:block th:each="itemImage : ${productItem.imageDTOList}">

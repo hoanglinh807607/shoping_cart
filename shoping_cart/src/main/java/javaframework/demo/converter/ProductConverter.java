@@ -25,10 +25,11 @@ public class ProductConverter extends AbstractConverter<ProductDTO> implements I
         dto.setQuantity(entity.getQuantity());
         dto.setContent(entity.getContent());
         dto.setSku(entity.getSku());
+        dto.setLove(entity.getLove());
         dto.setCategoryId(entity.getCategoryEntity().getId());
         dto.setCategoryName(entity.getCategoryEntity().getName());
         if( entity.getImageEntities() != null ) {
-            entity.getImageEntities().stream().forEach(i -> {
+            entity.getImageEntities().stream().filter(i->!i.getStatus().toString().isEmpty()).forEach(i -> {
                 dto.getImageDTOList().add(imageConverter.toDto(i));
             });
         }
@@ -48,17 +49,22 @@ public class ProductConverter extends AbstractConverter<ProductDTO> implements I
 
     @NotNull
     private ProductEntity getProductEntity(ProductEntity entity, ProductDTO dto) {
-        entity.setName(dto.getName());
-        entity.setPrice(dto.getPrice());
-        if( dto.getDiscountPrice() != null ) entity.setDiscountPrice(dto.getDiscountPrice());
-        else entity.setDiscountPrice(0l);
-        entity.setDescription(dto.getDescription());
-        entity.setQuantity(dto.getQuantity());
-        entity.setContent(dto.getContent());
-        entity.setSku(dto.getSku());
-        entity.setCategoryEntity(categoryRepos.findById(dto.getCategoryId()).get());
-        if( dto.getStatus() != null ) entity.setStatus(dto.getStatus());
-        else entity.setStatus(1);
+        entity.setName((String) checkNull(dto.getName(),entity.getName()));
+        entity.setPrice((Long) checkNull(dto.getPrice(),entity.getPrice()));
+        entity.setDiscountPrice((Long) checkNull(dto.getDiscountPrice(),entity.getDiscountPrice()));
+        entity.setDescription((String) checkNull(dto.getDescription(),entity.getDescription()));
+        entity.setQuantity((Integer) checkNull(dto.getQuantity(),entity.getQuantity()));
+        entity.setContent((String) checkNull(dto.getContent(),entity.getContent()));
+        entity.setSku((String) checkNull(dto.getSku(),entity.getSku()));
+        entity.setLove((Integer) checkNull(dto.getLove(),entity.getLove()));
+        entity.setCategoryEntity( dto.getCategoryId() != null ? categoryRepos.findById(dto.getCategoryId()).get() : entity.getCategoryEntity());
+        entity.setImageEntities(entity.getImageEntities());
+        entity.setStatus( dto.getStatus() != null ? dto.getStatus() : 1);
+        return entity;
+    }
+
+    private Object checkNull(Object dto, Object entity){
+        if( dto != null ) return dto;
         return entity;
     }
 }

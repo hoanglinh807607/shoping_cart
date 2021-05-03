@@ -25,9 +25,8 @@ public class CategoryValueConverter extends AbstractConverter<CategoryValueDTO> 
             });
         }
         if( entity.getProductEntities() != null){
-            entity.getProductEntities().stream().forEach(p->{
-                dto.getProductDTOList().add(productConverter.toDto(p));
-            });
+            entity.getProductEntities().stream().filter(p->!p.getStatus().toString().isEmpty())
+                    .forEach(p-> dto.getProductDTOList().add(productConverter.toDto(p)));
         }
         return toDto(dto,entity);
     }

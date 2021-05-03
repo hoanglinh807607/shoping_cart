@@ -33,3 +33,20 @@ function addtocart_quick(objectId){
 function closeQuickView(){
     $("#quick_view").css("display","none");
 }
+
+//click change like product
+function changeLikeProduct(id, love){
+    const data = { "id" : id, "love" : love};
+    $.ajax({
+        url: '/like',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        success: result => {
+            console.log(result);
+        },
+        error: result =>{
+        }
+    });
+}

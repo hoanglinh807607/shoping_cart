@@ -14,7 +14,7 @@ public class AttributeEntity extends BaseEntity{
     private String name;
 
     @ManyToMany(mappedBy = "attributeEntities")
-    private Collection<ProductEntity> userEntities;
+    private Collection<ProductEntity> productEntities;
 
     @OneToMany(mappedBy = "attributeEntity")
     private Collection<AttributeValueEntity> attributeValueEntities;

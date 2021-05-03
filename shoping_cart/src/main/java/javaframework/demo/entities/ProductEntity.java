@@ -3,6 +3,7 @@ package javaframework.demo.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -28,21 +29,23 @@ public class ProductEntity extends BaseEntity{
     @Column(name = "content")
     private String content;
 
-
     @Column(name = "sku")
     private String sku;
+
+    @Column(name = "love")
+    private Integer love;
 
     @ManyToOne
     @JoinColumn(name = "category_value_id")
     private CategoryValueEntity categoryEntity;
 
     @OneToMany(mappedBy = "productEntity")
-    private Collection<ImageEntity> imageEntities;
+    private Collection<ImageEntity> imageEntities = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "attribute_product",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "attribute_id"))
-    private Collection<AttributeEntity> attributeEntities;
+    private Collection<AttributeEntity> attributeEntities = new ArrayList<>();
 
 }
